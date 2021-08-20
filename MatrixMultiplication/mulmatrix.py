@@ -60,7 +60,7 @@ for args in files:
         call(["./a.out", "naive", str(args[0]),str(args[1]), str(args[2])])
         output_file.write('naive' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + '1' + '\n')
 
-data_df = pd.read_csv("matrix_results_df.txt", delimiter=r"\s+")
+data_df = pd.read_csv("matrix_results_df.txt", delimiter=r"\t")
 data_df['grouping_var'] = data_df.method + ' - ' + data_df.block_size.map(str)
 data_df = data_df.assign(grouping_var2 = ['naive' if a == "naive - 1" else a for a in data_df['grouping_var']])
 
