@@ -15,7 +15,7 @@ file_name = sys.argv[1]
 output_file_name = 'matrix_results_df.txt'
 
 input_file_def = open(file_name, 'w')
-matrix_sizes = np.arange(100, 2000, 200)
+matrix_sizes = np.arange(100, 1000, 200)
 call(["gcc", "matrix_multiplication.c"])
 
 for N in matrix_sizes:
