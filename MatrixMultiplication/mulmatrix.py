@@ -48,15 +48,16 @@ for block_size in block_sizes:
         if block_size >= int(args[0]):
             continue
         print("Matrix A: " + str(args[1]) + "\t\t" + "Matrix B: " + str(args[2]))
-				start = time.time()
+        start = time.time()
         call(["./a.out", "blocked", str(args[0]),str(args[1]), str(args[2]), str(block_size)])
-				duration = time.time() - start
-				output_file.write('blocked' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + str(block_size))
+        duration = time.time() - start
+        output_file.write('blocked' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + str(block_size))
 
 ## For the naive method
 for args in files:
         print("Matrix A: " + str(args[1]) + "\t\t" + "Matrix B: " + str(args[2]))
         call(["./a.out", "naive", str(args[0]),str(args[1]), str(args[2])])
+        output_file.write('naive' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + '1')
 
 data_df = pd.read_csv("matrix_results_df.txt", delimiter=r"\s+")
 data_df['grouping_var'] = data_df.method + ' - ' + data_df.block_size.map(str)
