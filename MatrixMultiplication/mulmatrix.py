@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from subprocess import call
 import pandas as pd
 import time 
-
+import sys 
 file_name = sys.argv[1]
 output_file_name = 'matrix_results_df.txt'
 
