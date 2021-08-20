@@ -57,7 +57,9 @@ for block_size in block_sizes:
 ## For the naive method
 for args in files:
         print("Matrix A: " + str(args[1]) + "\t\t" + "Matrix B: " + str(args[2]))
+        start = time.time()
         call(["./a.out", "naive", str(args[0]),str(args[1]), str(args[2])])
+        duration = time.time() - start
         output_file.write('naive' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + '1' + '\n')
 
 data_df = pd.read_csv("matrix_results_df.txt", delimiter=r"\t")
@@ -65,8 +67,8 @@ data_df['grouping_var'] = data_df.method + ' - ' + data_df.block_size.map(str)
 data_df = data_df.assign(grouping_var2 = ['naive' if a == "naive - 1" else a for a in data_df['grouping_var']])
 
 fig, ax = plt.subplots(figsize=(8,6))
-for label, df in data_df.groupby('grouping_var'):
-    df.time_spend.plot(kind="line", ax=ax, label=label)
+for label, df in data_df.groupby('grouping_var2'):
+    df.plot(x='n', y='time_spend', marker='.', ax=ax, label=label)
 plt.legend()
 plt.xlabel('Matrix Size')
 plt.ylabel('Time Spent (s)')
