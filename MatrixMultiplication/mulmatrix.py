@@ -14,7 +14,7 @@ file_name = sys.argv[1]
 output_file_name = 'matrix_results_df.txt'
 
 input_file_def = open(file_name, 'w')
-matrix_sizes = np.arange(100, 2800, 200)
+matrix_sizes = np.arange(100, 2000, 200)
 subprocess.call(["gcc", "matrix_multiplication.c"])
 
 for N in matrix_sizes:
@@ -49,14 +49,14 @@ for block_size in block_sizes:
             continue
         print("Matrix A: " + str(args[1]) + "\t\t" + "Matrix B: " + str(args[2]))
 				start = time.time()
-        call(["./matrix_multiplication", "blocked", str(args[0]),str(args[1]), str(args[2]), str(block_size)])
+        call(["./a.out", "blocked", str(args[0]),str(args[1]), str(args[2]), str(block_size)])
 				duration = time.time() - start
 				output_file.write('blocked' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + str(block_size))
 
 ## For the naive method
 for args in files:
         print("Matrix A: " + str(args[1]) + "\t\t" + "Matrix B: " + str(args[2]))
-        call(["./matrix_multiplication", "naive", str(args[0]),str(args[1]), str(args[2])])
+        call(["./a.out", "naive", str(args[0]),str(args[1]), str(args[2])])
 
 data_df = pd.read_csv("matrix_results_df.txt", delimiter=r"\s+")
 data_df['grouping_var'] = data_df.method + ' - ' + data_df.block_size.map(str)
