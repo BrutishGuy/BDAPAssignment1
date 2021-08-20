@@ -7,6 +7,7 @@ Created on Tue Nov 12 01:00:37 2019
 import numpy as np
 import matplotlib.pyplot as plt
 from subprocess import call
+
 import pandas as pd
 import time 
 import sys 
@@ -15,7 +16,7 @@ output_file_name = 'matrix_results_df.txt'
 
 input_file_def = open(file_name, 'w')
 matrix_sizes = np.arange(100, 2000, 200)
-subprocess.call(["gcc", "matrix_multiplication.c"])
+call(["gcc", "matrix_multiplication.c"])
 
 for N in matrix_sizes:
     A = np.random.randint(0, 10, size = (N,N)) # generate matrix A as digits from 0-9 of size NxN
