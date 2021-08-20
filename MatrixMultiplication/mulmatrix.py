@@ -41,7 +41,7 @@ print("The result of this script is a graph 'graph.png' in the current",
 
 files = [line.strip().split(' ') for line in input_file_def.readlines()]
 output_file = open(output_file_name, 'w')
-output_file.write('method' + '\t' + 'n' + '\t' + 'time_spend' + '\t' + 'block_size')
+output_file.write('method' + '\t' + 'n' + '\t' + 'time_spend' + '\t' + 'block_size\n')
 
 for block_size in block_sizes:
     print("Now executing for block size: " + str(block_size))
@@ -52,13 +52,13 @@ for block_size in block_sizes:
         start = time.time()
         call(["./a.out", "blocked", str(args[0]),str(args[1]), str(args[2]), str(block_size)])
         duration = time.time() - start
-        output_file.write('blocked' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + str(block_size))
+        output_file.write('blocked' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + str(block_size) + '\n')
 
 ## For the naive method
 for args in files:
         print("Matrix A: " + str(args[1]) + "\t\t" + "Matrix B: " + str(args[2]))
         call(["./a.out", "naive", str(args[0]),str(args[1]), str(args[2])])
-        output_file.write('naive' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + '1')
+        output_file.write('naive' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + '1' + '\n')
 
 data_df = pd.read_csv("matrix_results_df.txt", delimiter=r"\s+")
 data_df['grouping_var'] = data_df.method + ' - ' + data_df.block_size.map(str)
@@ -68,4 +68,8 @@ fig, ax = plt.subplots(figsize=(8,6))
 for label, df in data_df.groupby('grouping_var'):
     df.time_spend.plot(kind="line", ax=ax, label=label)
 plt.legend()
+plt.xlabel('Matrix Size')
+plt.ylabel('Time Spent (s)')
+plt.title('Naive vs Blocked Matrix Multiplication')
+plt.savefig('graph.png')
     
