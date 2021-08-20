@@ -15,7 +15,7 @@ file_name = sys.argv[1]
 output_file_name = 'matrix_results_df.txt'
 
 input_file_def = open(file_name, 'w')
-matrix_sizes = np.arange(100, 1000, 200)
+matrix_sizes = np.arange(100, 2500, 200)
 call(["gcc", "matrix_multiplication.c"])
 
 for N in matrix_sizes:
@@ -29,7 +29,7 @@ input_file_def.close()
     
 input_file_def = open(file_name, 'r')
 
-block_sizes = list(map(lambda block_size: int(block_size), [20,50,100, 500]))
+block_sizes = list(map(lambda block_size: int(block_size), [20,50,100]))
 
 print("This script executes matrix multiplication for the newly generated matrices in file",
         "'" + file_name + "'", "using the naive strategy and the blocked",
@@ -62,7 +62,7 @@ for args in files:
         duration = time.time() - start
         output_file.write('naive' + '\t' + str(int(args[0])) + '\t' + str(duration) + '\t' + '1' + '\n')
 
-data_df = pd.read_csv("matrix_results_df.txt", delimiter=r"\t")
+data_df = pd.read_csv("matrix_results_df.txt", delim_whitespace=True)
 data_df['grouping_var'] = data_df.method + ' - ' + data_df.block_size.map(str)
 data_df = data_df.assign(grouping_var2 = ['naive' if a == "naive - 1" else a for a in data_df['grouping_var']])
 
